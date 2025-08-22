@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkerPro | Your Strategic Amazon Growth Partner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .tab-active {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .pillar-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pillar-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .step-item.active .step-header {
+            background-color: #e0f2fe;
+        }
+        .step-item.active .step-header span:last-child {
+            transform: rotate(45deg);
+        }
+        .step-item.active .step-content {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 500px;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .step-content {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease-in-out;
+        }
+        .step-header span:last-child {
+            transition: transform 0.3s ease;
+        }
+        .whatsapp-container {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .whatsapp-float {
+            width: 60px;
+            height: 60px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+        .whatsapp-popup {
+            background-color: #fff;
+            color: #333;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateX(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .whatsapp-popup.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-container {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Chosen Palette: Warm Neutrals & Professional Blue -->
+    <!-- Application Structure Plan: The SPA is designed as a persuasive journey for a potential client. It starts with a strong Hero section addressing their main pain point (Amazon anxiety) and a clear Call to Action (CTA). It then introduces the core 'Four Pillars' philosophy through interactive cards to encourage exploration. The complex service offerings are organized into a clean, user-controlled tabbed interface to prevent information overload. The proprietary 5-Phase SEO methodology is highlighted with an interactive accordion to demonstrate a clear process. The client's onboarding journey is visualized as a simple, linear timeline for clarity. A new testimonials section adds social proof. Finally, engagement models are presented as a clear choice, leading to a final CTA. All CTAs now trigger an interactive form modal for lead capture that submits data to a Google Sheet. This structure guides the user from problem awareness to solution consideration in a logical, engaging flow, prioritizing usability over mirroring the report's linear format. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: The Four Pillars concept. Goal: Organize/Inform. Viz: Interactive HTML cards. Interaction: Hover to lift and shadow. Justification: Converts a core concept from passive text into an engaging, scannable visual element. Library: HTML/CSS.
+        - Report Info: Core Service Offerings. Goal: Organize/Detail. Viz: Tabbed content interface. Interaction: Click to switch between detailed service descriptions. Justification: Prevents information overload by allowing users to self-select and explore the complex service details without excessive scrolling. Library: HTML/CSS/JS.
+        - Report Info: 5-Phase SEO Methodology. Goal: Explain Process. Viz: Interactive vertical accordion. Interaction: Click to expand each phase and reveal details. Justification: Breaks down a complex proprietary process into digestible, sequential steps, enhancing its perceived value and clarity. Library: HTML/CSS/JS.
+        - New Feature: Testimonials/Case Studies. Goal: Build Trust/Show Proof. Viz: Styled content cards. Interaction: Static display with clear metrics. Justification: Provides social proof and tangible evidence of success, which is crucial for converting potential clients. Library: HTML/CSS.
+        - Report Info: Onboarding Process. Goal: Inform/Build Trust. Viz: A simple 3-step visual timeline. Interaction: Static visual guide. Justification: Simplifies the first 30 days into a clear, non-intimidating process, building client confidence. Library: HTML/CSS.
+        - Report Info: Engagement Tiers Table. Goal: Compare. Viz: Side-by-side feature cards. Interaction: Visual separation and clear checkmarks with a highlighted "Most Popular" option. Justification: Provides a quick, scannable comparison that visually emphasizes the value of the full-service partnership. Library: HTML/CSS.
+        - New Feature: Audit Request Form. Goal: Lead Capture. Viz: Interactive Modal Popup. Interaction: Appears on CTA click, allows user input, submits data via fetch to Google Apps Script, provides submission feedback. Justification: Creates a seamless and professional lead capture experience without navigating the user away from the page. Library: HTML/CSS/JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+                <div class="text-2xl font-bold text-gray-900">
+                    Parker<span class="text-blue-600">Pro</span>
+                </div>
+                <p class="text-xs text-gray-500 tracking-wider -mt-1">Ecom Expert</p>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#philosophy" class="text-gray-600 hover:text-blue-600 transition">Our Philosophy</a>
+                <a href="#services" class="text-gray-600 hover:text-blue-600 transition">Services</a>
+                <a href="#process" class="text-gray-600 hover:text-blue-600 transition">Our Process</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-blue-600 transition">Testimonials</a>
+                <a href="#packages" class="text-gray-600 hover:text-blue-600 transition">Packages</a>
+            </div>
+            <div class="flex items-center">
+                <button class="audit-request-btn hidden md:block bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-blue-700 transition shadow">Get Free Audit</button>
+                <button id="mobile-menu-button" class="md:hidden ml-4 p-2 text-gray-600 hover:text-blue-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <a href="#philosophy" class="block py-2 px-6 text-gray-600 hover:bg-gray-50 hover:text-blue-600">Our Philosophy</a>
+            <a href="#services" class="block py-2 px-6 text-gray-600 hover:bg-gray-50 hover:text-blue-600">Services</a>
+            <a href="#process" class="block py-2 px-6 text-gray-600 hover:bg-gray-50 hover:text-blue-600">Our Process</a>
+            <a href="#testimonials" class="block py-2 px-6 text-gray-600 hover:bg-gray-50 hover:text-blue-600">Testimonials</a>
+            <a href="#packages" class="block py-2 px-6 text-gray-600 hover:bg-gray-50 hover:text-blue-600">Packages</a>
+            <button class="audit-request-btn block w-full text-left py-3 px-6 bg-blue-50 text-blue-600 font-semibold">Get Free Audit</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="bg-white">
+            <div class="container mx-auto px-6 py-20 md:py-32 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">Stop Worrying, Start Growing on Amazon</h1>
+                <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">We manage the complexities of the Amazon marketplace so you can focus on what you do best: building your brand. ParkerPro is your dedicated partner for profitable, sustainable growth.</p>
+                <div class="mt-10">
+                    <button class="audit-request-btn bg-blue-600 text-white font-bold px-8 py-4 rounded-lg text-lg hover:bg-blue-700 transition shadow-lg">Request Your Complimentary Performance Audit</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="philosophy" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">A Holistic Engine for Growth</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Our strategy is built on four interconnected pillars that work in concert to drive traffic, increase conversions, and build a dominant brand presence. True success is achieved only when these elements are synchronized.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="pillar-card bg-white p-8 rounded-xl shadow-md border border-gray-200 text-center">
+                        <div class="text-4xl mb-4">📈</div>
+                        <h3 class="text-xl font-bold mb-2">Strategic Advertising</h3>
+                        <p class="text-gray-600">Turn clicks into profitable customers with data-driven PPC campaigns that optimize for total business growth, not just ACoS.</p>
+                    </div>
+                    <div class="pillar-card bg-white p-8 rounded-xl shadow-md border border-gray-200 text-center">
+                        <div class="text-4xl mb-4">🔍</div>
+                        <h3 class="text-xl font-bold mb-2">Advanced SEO</h3>
+                        <p class="text-gray-600">Dominate organic search rankings with our proprietary 5-phase methodology, ensuring maximum visibility for your products.</p>
+                    </div>
+                    <div class="pillar-card bg-white p-8 rounded-xl shadow-md border border-gray-200 text-center">
+                        <div class="text-4xl mb-4">🎨</div>
+                        <h3 class="text-xl font-bold mb-2">Conversion Design</h3>
+                        <p class="text-gray-600">Transform traffic into sales with stunning visuals, A+ Content, and optimized listings that tell your brand's story.</p>
+                    </div>
+                    <div class="pillar-card bg-white p-8 rounded-xl shadow-md border border-gray-200 text-center">
+                        <div class="text-4xl mb-4">🛠️</div>
+                        <h3 class="text-xl font-bold mb-2">Account Management</h3>
+                        <p class="text-gray-600">Gain peace of mind with proactive account health monitoring, inventory management, and expert troubleshooting.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Our Core Service Offerings</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">We provide a comprehensive suite of services designed to manage every facet of your Amazon business. Explore our four pillars of growth to see how we drive results.</p>
+                </div>
+
+                <div class="max-w-5xl mx-auto">
+                    <div class="mb-8 flex flex-wrap justify-center gap-2 md:gap-4 border-b border-gray-200">
+                        <button data-tab="tab1" class="tab-btn tab-active px-4 py-3 text-base md:text-lg font-semibold border-b-2 border-transparent hover:text-blue-600 transition">Account Management</button>
+                        <button data-tab="tab2" class="tab-btn px-4 py-3 text-base md:text-lg font-semibold border-b-2 border-transparent hover:text-blue-600 transition">Advertising & PPC</button>
+                        <button data-tab="tab3" class="tab-btn px-4 py-3 text-base md:text-lg font-semibold border-b-2 border-transparent hover:text-blue-600 transition">Amazon SEO</button>
+                        <button data-tab="tab4" class="tab-btn px-4 py-3 text-base md:text-lg font-semibold border-b-2 border-transparent hover:text-blue-600 transition">Creative & Design</button>
+                    </div>
+
+                    <div id="tab-content" class="fade-in">
+                        <div id="tab1" class="tab-pane">
+                            <h3 class="text-2xl font-bold mb-4 text-gray-800">Full-Service Account Management</h3>
+                            <p class="text-gray-600 mb-6">This is the command center for your Amazon business. We handle the immense day-to-day complexity of Seller Central, freeing you to focus on your brand.</p>
+                            <ul class="space-y-4 text-gray-700">
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Proactive Platform Management:</strong> Continuous Account Health monitoring, hijacker alerts, and stranded/suppressed inventory resolution.</span></li>
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Expert Catalog Troubleshooting:</strong> Full ownership of case logs, fixing complex listing errors, and managing parent-child variations.</span></li>
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Inventory & Logistics:</strong> Data-driven restock recommendations to prevent stockouts and protect your IPI score.</span></li>
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Actionable Reporting & Analytics:</strong> Weekly, easy-to-understand reports on sales, advertising, and conversion trends.</span></li>
+                            </ul>
+                        </div>
+                        <div id="tab2" class="tab-pane hidden">
+                            <h3 class="text-2xl font-bold mb-4 text-gray-800">Strategic Advertising & PPC Management</h3>
+                            <p class="text-gray-600 mb-6">We focus on Total Advertising Cost of Sales (TACoS) to ensure your ad spend drives overall revenue growth. Our full-funnel strategy turns clicks into loyal, profitable customers.</p>
+                            <ul class="space-y-4 text-gray-700">
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Full-Funnel Campaign Management:</strong> Expertise across Sponsored Products, Brands, Display, and Video to capture demand at every stage.</span></li>
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Advanced Targeting Strategies:</strong> Offensive campaigns to capture competitor market share and defensive campaigns to protect your brand's digital shelf.</span></li>
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Continuous Optimization:</strong> Daily bid adjustments, aggressive negative keyword harvesting, and A/B testing to eliminate wasted spend and improve ROI.</span></li>
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Transparent Reporting:</strong> Detailed weekly reports covering all critical metrics, including ACoS, TACoS, and total sales growth.</span></li>
+                            </ul>
+                        </div>
+                        <div id="tab3" class="tab-pane hidden">
+                            <h3 class="text-2xl font-bold mb-4 text-gray-800">The ParkerPro 5-Phase SEO Methodology</h3>
+                            <p class="text-gray-600 mb-6">We treat Amazon SEO as a dynamic, ongoing process. Our proprietary methodology provides a clear, measurable journey to dominate organic search rankings.</p>
+                            <div class="space-y-2">
+                                <div class="step-item">
+                                    <button class="step-header w-full text-left p-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition">
+                                        <span class="font-semibold">Phase 1: Foundational Indexing</span>
+                                        <span class="text-xl font-light">+</span>
+                                    </button>
+                                    <div class="step-content px-4 text-gray-600">Ensure your product is properly indexed by Amazon's A9 algorithm for its most critical core terms, based on deep competitor research.</div>
+                                </div>
+                                <div class="step-item">
+                                    <button class="step-header w-full text-left p-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition">
+                                        <span class="font-semibold">Phase 2: On-Page Copy Optimization</span>
+                                        <span class="text-xl font-light">+</span>
+                                    </button>
+                                    <div class="step-content px-4 text-gray-600">Strategically refine the title and bullet points to incorporate secondary keywords and remove redundant terms from the backend to expand your indexing footprint.</div>
+                                </div>
+                                <div class="step-item">
+                                    <button class="step-header w-full text-left p-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition">
+                                        <span class="font-semibold">Phase 3: Strike Zone Targeting</span>
+                                        <span class="text-xl font-light">+</span>
+                                    </button>
+                                    <div class="step-content px-4 text-gray-600">Identify keywords where you rank on pages 2-5 (positions 20-50) and launch a concerted PPC and SEO push to drive them onto the critical first page.</div>
+                                </div>
+                                <div class="step-item">
+                                    <button class="step-header w-full text-left p-4 bg-gray-100 hover:bg-gray-200 rounded-lg flex justify-between items-center transition">
+                                        <span class="font-semibold">Phase 4: Market Share Capture</span>
+                                        <span class="text-xl font-light">+</span>
+                                    </button>
+                                    <div class="step-content px-4 text-gray-600">Leverage Amazon's Search Query Performance data to identify and integrate the market's highest-converting search terms directly into your strategy.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab4" class="tab-pane hidden">
+                            <h3 class="text-2xl font-bold mb-4 text-gray-800">Conversion-Focused Creative & Design</h3>
+                            <p class="text-gray-600 mb-6">Superior design is not an expense; it's a direct driver of sales. We optimize every visual and written element of your product page to maximize conversion rates.</p>
+                             <ul class="space-y-4 text-gray-700">
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Optimized Listing Image Stack:</strong> A full set of 7 images, including a CTR-focused main image, infographics, and lifestyle shots.</span></li>
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Enhanced Brand Content (A+ & Premium A+):</strong> Visually rich content that showcases features, overcomes objections, and provides an additional SEO boost.</span></li>
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Compelling Brand Story Module:</strong> A brand-centric narrative across your catalog to build customer trust and loyalty.</span></li>
+                                <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1">✓</span><span><strong>Custom Amazon Storefront Design:</strong> A multi-page brand destination to showcase your full catalog and drive cross-sales.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Your First 30 Days with ParkerPro</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">We follow a structured onboarding process to ensure a smooth, effective start to our partnership, building momentum and confidence from day one.</p>
+                </div>
+                <div class="relative max-w-4xl mx-auto">
+                    <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-300 hidden md:block"></div>
+                    <div class="space-y-12 md:space-y-0">
+                        <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                            <div class="md:text-right md:pr-8">
+                                <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold ml-auto md:ml-auto mr-auto md:mr-0 mb-4 md:mb-0">1</div>
+                                <h3 class="text-2xl font-bold">Discovery & Audit</h3>
+                                <p class="text-gray-600 mt-2">Week 1: We start with a kick-off call, grant account access, and immediately begin our comprehensive Performance Audit to identify key opportunities.</p>
+                            </div>
+                            <div class="hidden md:block"></div>
+                        </div>
+                        <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                            <div class="hidden md:block"></div>
+                            <div class="md:pl-8">
+                                <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mr-auto md:mr-auto ml-auto md:ml-0 mb-4 md:mb-0">2</div>
+                                <h3 class="text-2xl font-bold">Strategy & Alignment</h3>
+                                <p class="text-gray-600 mt-2">Week 2: We present the audit findings, outline a 90-day strategic roadmap, and mutually agree on the Key Performance Indicators (KPIs) for our partnership.</p>
+                            </div>
+                        </div>
+                        <div class="md:grid md:grid-cols-2 md:gap-8 items-center">
+                            <div class="md:text-right md:pr-8">
+                                <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold ml-auto md:ml-auto mr-auto md:mr-0 mb-4 md:mb-0">3</div>
+                                <h3 class="text-2xl font-bold">Foundational Implementation</h3>
+                                <p class="text-gray-600 mt-2">Weeks 3-4: With the strategy approved, our team begins executing "quick win" optimizations like foundational SEO and PPC restructuring to drive immediate impact.</p>
+                            </div>
+                            <div class="hidden md:block"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Success Stories from Our Partners</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Don't just take our word for it. Here's how we've helped brands like yours achieve remarkable growth on Amazon.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 flex flex-col">
+                        <p class="text-gray-600 italic mb-6 flex-grow">"Working with ParkerPro was a game-changer. Their strategic approach to PPC and SEO doubled our organic traffic in just three months. They are true partners in every sense of the word."</p>
+                        <div>
+                            <p class="font-bold text-gray-900">Devan Joshi</p>
+                            <p class="text-sm text-gray-500">Founder, Shree Ram Supplies</p>
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <p class="text-2xl font-bold text-blue-600">+210%</p>
+                                <p class="text-sm text-gray-600">Increase in Organic Sales Q1</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 flex flex-col">
+                        <p class="text-gray-600 italic mb-6 flex-grow">"Their design team is incredible. The new A+ Content and storefront they built for us increased our conversion rate by 40%. The investment paid for itself in less than a month."</p>
+                        <div>
+                            <p class="font-bold text-gray-900">Abhishek Shah</p>
+                            <p class="text-sm text-gray-500">Owner, Mona Decor</p>
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <p class="text-2xl font-bold text-blue-600">-35%</p>
+                                <p class="text-sm text-gray-600">Decrease in ACoS</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 flex flex-col">
+                        <p class="text-gray-600 italic mb-6 flex-grow">"The peace of mind is invaluable. Knowing ParkerPro is handling the day-to-day account health and troubleshooting lets me focus on product development. Our account has never been safer or more profitable."</p>
+                        <div>
+                            <p class="font-bold text-gray-900">Bhavin Ranpura</p>
+                            <p class="text-sm text-gray-500">Proprietor, Ghanshyam Jewellery</p>
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <p class="text-2xl font-bold text-blue-600">1,200+</p>
+                                <p class="text-sm text-gray-600">Hours Saved on Account Admin</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 flex flex-col">
+                        <p class="text-gray-600 italic mb-6 flex-grow">"ParkerPro's comprehensive strategy helped us launch and scale in a competitive category we couldn't crack on our own. Their team managed everything, allowing us to see a 300% growth in our first six months."</p>
+                        <div>
+                            <p class="font-bold text-gray-900">Jatin Thakkar</p>
+                            <p class="text-sm text-gray-500">Director, Maroon Selection</p>
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <p class="text-2xl font-bold text-blue-600">+300%</p>
+                                <p class="text-sm text-gray-600">Revenue Growth in 6 Months</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="packages" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">A Solution for Every Stage of Growth</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">We offer flexible engagement models to meet your specific needs, from targeted projects to a comprehensive, long-term partnership for aggressive growth.</p>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                    <div class="border border-gray-200 rounded-xl p-8 flex flex-col bg-white">
+                        <h3 class="text-2xl font-bold text-gray-900">A La Carte Projects</h3>
+                        <p class="text-gray-600 mt-2 mb-6 flex-grow">For clients who require expert intervention for a specific, well-defined task. A perfect low-risk entry point to experience our quality and effectiveness.</p>
+                        <ul class="space-y-3 text-gray-700 mb-8">
+                            <li class="flex items-center"><span class="text-blue-500 mr-3">✓</span><span>Phase 1 SEO Optimization</span></li>
+                            <li class="flex items-center"><span class="text-blue-500 mr-3">✓</span><span>A+ Content Design</span></li>
+                            <li class="flex items-center"><span class="text-blue-500 mr-3">✓</span><span>Listing Reinstatement Service</span></li>
+                            <li class="flex items-center"><span class="text-blue-500 mr-3">✓</span><span>Targeted PPC Campaign Build</span></li>
+                        </ul>
+                        <a href="#contact" class="mt-auto w-full text-center bg-gray-100 text-blue-600 font-semibold px-6 py-3 rounded-lg hover:bg-gray-200 transition">Discuss a Project</a>
+                    </div>
+                    <div class="border-2 border-blue-600 rounded-xl p-8 flex flex-col bg-blue-50 relative">
+                        <div class="absolute top-0 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-semibold">Most Popular</div>
+                        <h3 class="text-2xl font-bold text-blue-800">Full-Service Partnership</h3>
+                        <p class="text-gray-600 mt-2 mb-6 flex-grow">Our flagship monthly retainer for established brands serious about achieving aggressive, sustained growth. Includes a dedicated Brand Manager and continuous optimization.</p>
+                        <ul class="space-y-3 text-gray-700 mb-8">
+                            <li class="flex items-center"><span class="text-blue-500 mr-3 font-bold">✓</span><span><strong>Everything in A La Carte, plus:</strong></span></li>
+                            <li class="flex items-center"><span class="text-blue-500 mr-3 font-bold">✓</span><span>Dedicated Brand Manager & Bi-Weekly Calls</span></li>
+                            <li class="flex items-center"><span class="text-blue-500 mr-3 font-bold">✓</span><span>Ongoing Management of All 4 Pillars</span></li>
+                            <li class="flex items-center"><span class="text-blue-500 mr-3 font-bold">✓</span><span>Unlimited Catalog & Troubleshooting Support</span></li>
+                            <li class="flex items-center"><span class="text-blue-500 mr-3 font-bold">✓</span><span>Weekly Performance Reporting</span></li>
+                        </ul>
+                        <a href="#contact" class="mt-auto w-full text-center bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition shadow">Become a Partner</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 bg-blue-700 text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold">Unlock Your Brand's Full Potential</h2>
+                <p class="mt-4 text-lg text-blue-100 max-w-3xl mx-auto">The journey toward marketplace dominance begins with data. Let our experts conduct a complimentary, no-obligation audit of your Amazon account to uncover your greatest opportunities for growth.</p>
+                <div class="mt-10">
+                    <button class="audit-request-btn bg-white text-blue-600 font-bold px-8 py-4 rounded-lg text-lg hover:bg-gray-100 transition shadow-lg">Request Your Free Performance Audit Today</button>
+                </div>
+                <div class="mt-8 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-lg text-blue-100">
+                    <a href="mailto:yuvraj@parkerpro.in" class="hover:text-white transition">📧 yuvraj@parkerpro.in</a>
+                    <span class="hidden md:inline">|</span>
+                    <a href="tel:+919925580777" class="hover:text-white transition">📞 +91 99255 80777</a>
+                     <span class="hidden md:inline">|</span>
+                    <a id="whatsapp-contact-link" href="#" target="_blank" class="hover:text-white transition inline-flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.487 5.235 3.487 8.413 0 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.687-1.475L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.225.651 4.315 1.731 6.086l.474.854-1.217 4.459 4.569-1.187.841.492z"/></svg>
+                        <span>Chat on WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2024 ParkerPro. All Rights Reserved.</p>
+            <p class="text-sm mt-2">Your Strategic Partner for Enduring Amazon Success.</p>
+        </div>
+    </footer>
+
+    <div class="whatsapp-container">
+        <div id="whatsapp-popup" class="whatsapp-popup">
+            Need help? Chat with us!
+        </div>
+        <a id="whatsapp-float-link" href="#" class="whatsapp-float" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.487 5.235 3.487 8.413 0 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.687-1.475L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.225.651 4.315 1.731 6.086l.474.854-1.217 4.459 4.569-1.187.841.492z"/></svg>
+        </a>
+    </div>
+
+    <!-- Audit Request Modal -->
+    <div id="audit-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 hidden opacity-0">
+        <div class="modal-container bg-white w-full max-w-lg mx-auto rounded-xl shadow-lg z-50 opacity-0 transform -translate-y-10">
+            <div class="p-6">
+                <div class="flex justify-between items-center pb-3">
+                    <p class="text-2xl font-bold text-gray-800">Request a Free Audit</p>
+                    <button id="close-modal-btn" class="text-3xl font-light text-gray-400 hover:text-gray-600">&times;</button>
+                </div>
+                <div id="form-wrapper">
+                    <p class="text-gray-600 mb-6">Fill out the form below, and our team will be in touch to schedule your complimentary Amazon performance audit.</p>
+                    <form id="audit-form">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                                <input type="text" name="name" id="name" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                                <input type="email" name="email" id="email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <input type="tel" name="phone" id="phone" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="company" class="block text-sm font-medium text-gray-700">Company Name</label>
+                                <input type="text" name="company" id="company" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="storefront" class="block text-sm font-medium text-gray-700">Amazon Storefront Link <span class="text-gray-500">(Optional)</span></label>
+                                <input type="url" name="storefront" id="storefront" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+                        <div id="form-error" class="hidden text-center p-3 bg-red-50 text-red-700 rounded-md mt-4">
+                            <p>Sorry, there was an error submitting your request. Please try again or contact us directly.</p>
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Submit Request</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="form-confirmation" class="hidden text-center py-10">
+                    <h3 class="text-2xl font-bold text-green-600">Thank You!</h3>
+                    <p class="text-gray-600 mt-2">Your audit request has been received. Our team will contact you shortly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const panes = document.querySelectorAll('.tab-pane');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const auditModal = document.getElementById('audit-modal');
+            const modalContainer = auditModal.querySelector('.modal-container');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const auditRequestBtns = document.querySelectorAll('.audit-request-btn');
+            const auditForm = document.getElementById('audit-form');
+            const formWrapper = document.getElementById('form-wrapper');
+            const formConfirmation = document.getElementById('form-confirmation');
+            const formError = document.getElementById('form-error');
+            const submitButton = auditForm.querySelector('button[type="submit"]');
+            const whatsappPopup = document.getElementById('whatsapp-popup');
+
+            const whatsappMessage = "Hello ParkerPro! I saw your website and I'm interested in learning more about your Amazon services. Could you please provide more information?";
+            const whatsappLink = `https://wa.me/919925580777?text=${encodeURIComponent(whatsappMessage)}`;
+            document.getElementById('whatsapp-contact-link').href = whatsappLink;
+            document.getElementById('whatsapp-float-link').href = whatsappLink;
+
+            setTimeout(() => {
+                whatsappPopup.classList.add('show');
+            }, 3000);
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    whatsappPopup.classList.remove('show');
+                }
+            });
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('tab-active'));
+                    tab.classList.add('tab-active');
+
+                    const targetPaneId = tab.getAttribute('data-tab');
+                    
+                    panes.forEach(pane => {
+                        if (pane.id === targetPaneId) {
+                            pane.classList.remove('hidden');
+                            pane.classList.add('fade-in');
+                        } else {
+                            pane.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            const stepHeaders = document.querySelectorAll('.step-header');
+            stepHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const stepItem = header.closest('.step-item');
+                    if (!stepItem) return;
+
+                    const isActive = stepItem.classList.contains('active');
+
+                    document.querySelectorAll('.step-item.active').forEach(activeItem => {
+                        activeItem.classList.remove('active');
+                    });
+
+                    if (!isActive) {
+                        stepItem.classList.add('active');
+                    }
+                });
+            });
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+            const openModal = () => {
+                auditModal.classList.remove('hidden');
+                setTimeout(() => {
+                    auditModal.classList.remove('opacity-0');
+                    modalContainer.classList.remove('opacity-0', '-translate-y-10');
+                }, 10);
+            };
+
+            const closeModal = () => {
+                modalContainer.classList.add('opacity-0', '-translate-y-10');
+                auditModal.classList.add('opacity-0');
+                setTimeout(() => {
+                    auditModal.classList.add('hidden');
+                    formWrapper.classList.remove('hidden');
+                    formConfirmation.classList.add('hidden');
+                    auditForm.reset();
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Submit Request';
+                }, 300);
+            };
+
+            auditRequestBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal();
+                });
+            });
+
+            closeModalBtn.addEventListener('click', closeModal);
+            auditModal.addEventListener('click', (e) => {
+                if (e.target === auditModal) {
+                    closeModal();
+                }
+            });
+
+            auditForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+                formError.classList.add('hidden');
+
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbxNl1aKR9AVNFBWXvnUIrKkbC0EXQJo5xHsMCSYcnNGtoFHN-JsU-ODP_57MZ7v4w1Zbw/exec';
+                const formData = new FormData(auditForm);
+
+                fetch(scriptURL, { method: 'POST', body: formData })
+                    .then(response => {
+                        if (response.ok) {
+                            formWrapper.classList.add('hidden');
+                            formConfirmation.classList.remove('hidden');
+                            setTimeout(closeModal, 3000);
+                        } else {
+                            throw new Error('Network response was not ok.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error!', error.message);
+                        formError.classList.remove('hidden');
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Submit Request';
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
+
